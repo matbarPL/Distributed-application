@@ -1,11 +1,12 @@
-mpirun -H master,uslave1,uslave2 python CSP.py 4
+<pre>mpirun -H master,uslave1,uslave2 python CSP.py 4</pre>
 
 #### install these:
+<pre>
 sudo apt-get install python-xlsxwriter  
 sudo apt-get install python-xlrd  
 sudo apt-get install python-openpyxl  
 sudo apt-get install python-matplotlib  
-
+</pre>
 #### VM set with local master 
 File->Host Network Manager-> Create -> Manually (192.168.33.1, 255.255.255.0)  
 
