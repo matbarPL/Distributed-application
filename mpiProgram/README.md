@@ -18,7 +18,7 @@ konfiguracja interfejsow sieciowych odbywa sie w innej lokalizacji niz dotychcza
 /etc/netplan/50-cloud-init.yaml (bezpiecznie zrobic backup)  
 
 np:  
-
+<pre>
 networks:  
    ethernets:  
         enp0s3:  
@@ -32,6 +32,6 @@ networks:
                 addresses: [8.8.8.8,8.8.4.4]  
    version 2  
    renderer: networkd  
-
+</pre>
 ->analogicznie w drugim nodzie  
 
