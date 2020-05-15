@@ -9,16 +9,21 @@ class Register extends Component {
       last_name: '',
       email: '',
       password: '',
-      errors: {}
+      error: ''
     }
 
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
 
+  componentDidUpdate(){
+    setTimeout(() => this.setState({error:''}), 5000);
+  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value })
   }
+
   onSubmit(e) {
     e.preventDefault()
 
@@ -40,6 +45,7 @@ class Register extends Component {
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmit}>
+            <span className="error">{this.state.error}</span>
               <h1 className="h3 mb-3 font-weight-normal">Register</h1>
               <div className="form-group">
                 <label htmlFor="name">First name</label>

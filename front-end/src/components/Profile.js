@@ -8,8 +8,12 @@ class Profile extends Component {
       first_name: '',
       last_name: '',
       email: '',
-      errors: {}
+      error: ''
     }
+  }
+
+  componentDidUpdate(){
+    setTimeout(() => this.setState({error:''}), 5000);
   }
 
   componentDidMount() {
@@ -29,6 +33,7 @@ class Profile extends Component {
           <div className="col-sm-8 mx-auto">
             <h1 className="text-center">PROFILE</h1>
           </div>
+          <span className="error">{this.state.error}</span>
           <table className="table col-md-6 mx-auto">
             <tbody>
               <tr>

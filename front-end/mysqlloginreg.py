@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, json
+from flask import Flask, jsonify, request, json, send_file
 from flask_mysqldb import MySQL
 from datetime import datetime
 from flask_cors import CORS
@@ -28,15 +28,15 @@ def register():
     email = request.get_json()['email']
     password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
     created = datetime.utcnow()
-	
-    cur.execute("INSERT INTO users (first_name, last_name, email, password, created) VALUES ('" + 
-		str(first_name) + "', '" + 
-		str(last_name) + "', '" + 
-		str(email) + "', '" + 
-		str(password) + "', '" + 
+
+    cur.execute("INSERT INTO users (first_name, last_name, email, password, created) VALUES ('" +
+		str(first_name) + "', '" +
+		str(last_name) + "', '" +
+		str(email) + "', '" +
+		str(password) + "', '" +
 		str(created) + "')")
     mysql.connection.commit()
-	
+
     result = {
 		'first_name' : first_name,
 		'last_name' : last_name,
@@ -46,7 +46,7 @@ def register():
 	}
 
     return jsonify({'result' : result})
-	
+
 
 @app.route('/users/login', methods=['POST'])
 def login():
@@ -54,17 +54,17 @@ def login():
     email = request.get_json()['email']
     password = request.get_json()['password']
     result = ""
-	
+
     cur.execute("SELECT * FROM users where email = '" + str(email) + "'")
     rv = cur.fetchone()
-	
+
     if bcrypt.check_password_hash(rv['password'], password):
         access_token = create_access_token(identity = {'first_name': rv['first_name'],'last_name': rv['last_name'],'email': rv['email']})
         result = access_token
     else:
         result = jsonify({"error":"Invalid username and password"})
-    
+        
     return result
-	
+
 if __name__ == '__main__':
     app.run(debug=True)

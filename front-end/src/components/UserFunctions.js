@@ -28,13 +28,38 @@ export const login = user => {
     })
 }
 
-export const getProfile = user => {
+export const uploadData = formData => {
   return axios
-    .get('users/profile', {
-      //headers: { Authorization: ` ${this.getToken()}` }
+    .post('http://localhost:5000/api/uploadfile', formData)
+    .then(response => {
+      return response.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+export const generateTimetable = newMPI => {
+  return axios
+    .post('http://localhost:5000/api/users/function', {
+      number_of_classrooms: newMPI.number_of_classrooms,
+      number_of_slaves: newMPI.number_of_slaves,
+      max_iteration_number: newMPI.max_iteration_number,
+      mutation_probability: newMPI.mutation_probability,
+      cross_probability: newMPI.cross_probability
     })
     .then(response => {
-      console.log(response)
+      return response.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+export const downloadFile = () => {
+  return axios
+    .get('http://localhost:5000/api/download')
+    .then(response => {
       return response.data
     })
     .catch(err => {

@@ -7,11 +7,15 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      errors: {}
+      error: ''
     }
 
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  componentDidUpdate(){
+    setTimeout(() => this.setState({error:''}), 5000);
   }
 
   onChange(e) {
@@ -29,6 +33,11 @@ class Login extends Component {
       if (!res.error) {
         this.props.history.push(`/profile`)
       }
+      else {
+        this.setState({
+        error: res.error
+      });
+      }
     })
   }
 
@@ -38,6 +47,7 @@ class Login extends Component {
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmit}>
+            <span className="error">{this.state.error}</span>
               <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
               <div className="form-group">
                 <label htmlFor="email">Email address</label>
