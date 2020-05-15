@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useAuth } from "../context/auth";
 
 export const register = newUser => {
   return axios
@@ -21,6 +22,7 @@ export const login = user => {
     })
     .then(response => {
       localStorage.setItem('usertoken', response.data)
+      localStorage.setItem('isLoggedOut', false)
       return response.data
     })
     .catch(err => {

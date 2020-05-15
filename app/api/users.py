@@ -45,8 +45,11 @@ def login():
                 identity={'first_name': user.first_name, 'last_name': user.last_name,\
                           'email': user.email})
             result = access_token
+            print(result )
         else:
+            print('else')
             result = jsonify({"error": "Invalid password"})
 
+    print(user)
     return result
 

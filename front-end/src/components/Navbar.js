@@ -5,6 +5,7 @@ class Landing extends Component {
   logOut(e) {
     e.preventDefault()
     localStorage.removeItem('usertoken')
+    localStorage.setItem('isLoggedOut', true)
     this.props.history.push(`/`)
   }
 
