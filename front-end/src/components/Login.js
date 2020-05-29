@@ -35,7 +35,7 @@ class Login extends Component {
       }
       else {
         this.setState({
-        error: res.error
+          error: res.error
       });
       }
     })

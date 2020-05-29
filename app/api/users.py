@@ -66,6 +66,22 @@ def login():
 
     return result
 
+@bp.route('/users/get', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    users_dict = [user.to_dict() for user in users]
+    return jsonify(users_dict)
+
+@bp.route('/users/delete', methods=['POST'])
+def delete_user():
+    print(request.get_json()['id'])
+    user_to_del = User.query.filter_by(id=request.get_json()['id']).one()
+    print(user_to_del)
+    db.session.delete(user_to_del)
+    db.session.commit()
+    response = jsonify(user_to_del.to_dict())
+    response.status_code = 201
+    return response
 
 @bp.route('/uploadfile', methods=['POST'])
 def upload_file():
@@ -109,7 +125,7 @@ def generateTimetable():
                                        + str(cross_probability) + ' '
                                        + str(number_of_classrooms))
 
-    print command
+    print (command)
     os.chdir(app.config["PROGRAM_FOLDER"])
     os.system(command)
 
@@ -140,7 +156,7 @@ def start_mpi():
     mutation_probability = request.get_json()['mutation_probability']
     cross_probability = request.get_json()['cross_probability']
 
-    print command
+    print (command)
     os.chdir('/home/lukasz/nauka/AIIR/program')
     os.system(command)
 

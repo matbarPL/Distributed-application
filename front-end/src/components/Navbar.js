@@ -37,6 +37,11 @@ class Landing extends Component {
           </Link>
         </li>
         <li className="nav-item">
+          <Link to="/manage" className="nav-link">
+            Manage users
+          </Link>
+        </li>
+        <li className="nav-item">
           <a href="" onClick={this.logOut.bind(this)} className="nav-link">
             Logout
           </a>
