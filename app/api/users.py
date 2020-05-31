@@ -9,11 +9,13 @@ from app import db
 from app.api import bp
 
 import os
+import subprocess32
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "/home/lukasz/nauka/AIIR/frontback/Distributed-application/app/api/dataFiles"
 ALLOWED_EXTENSIONS = {'xlsx', 'xls'}
 PROGRAM_FOLDER = "/home/lukasz/cloud/program"
+PROGRAM_CONFLICTS_FILE = "/home/lukasz/cloud/program/timetableConflicts.txt"
 PROGRAM_TIMETABLE_FILE = "/home/lukasz/cloud/program/timetable.xlsx"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['PROGRAM_FOLDER'] = PROGRAM_FOLDER
@@ -107,9 +109,11 @@ def upload_file():
 def generateTimetable():
     number_of_classrooms = request.get_json()['number_of_classrooms']
     number_of_slaves = request.get_json()['number_of_slaves']
+    number_of_init = request.get_json()['number_of_init']
     max_iteration_number = request.get_json()['max_iteration_number']
     mutation_probability = request.get_json()['mutation_probability']
     cross_probability = request.get_json()['cross_probability']
+    program_timeout = request.get_json()['program_timeout']
 
     mpiNodes = ''
     if number_of_slaves > 0:
@@ -123,15 +127,27 @@ def generateTimetable():
                                        + str(max_iteration_number) + ' '
                                        + str(mutation_probability) + ' '
                                        + str(cross_probability) + ' '
-                                       + str(number_of_classrooms))
+                                       + str(number_of_classrooms) + ' '
+                                       + str(number_of_init))
 
-    print (command)
+    print command
     os.chdir(app.config["PROGRAM_FOLDER"])
-    os.system(command)
+    #os.system(command)
+    processRun = subprocess32.Popen(command, stdout=subprocess32.PIPE, stderr=subprocess32.PIPE, shell=True)
+    try:
+    	processRun.wait(int(program_timeout))
+    except subprocess32.TimeoutExpired:
+    	processRun.kill()
 
-    if(os.path.isfile(app.config["PROGRAM_TIMETABLE_FILE"])):
-        return "done"
-    return jsonify({"error": "error: Server problem"})
+    rc = processRun.poll()
+    print rc
+
+    if(os.path.isfile(app.config["PROGRAM_TIMETABLE_FILE"]) and rc is not None):
+        f = open(PROGRAM_CONFLICTS_FILE, "r")
+        varTmpFinalTimetable = f.read()
+        os.remove(PROGRAM_CONFLICTS_FILE)
+        return varTmpFinalTimetable
+    return jsonify({"error": "Server problem"})
 
 
 @bp.route('/download')  #/<path:filename>

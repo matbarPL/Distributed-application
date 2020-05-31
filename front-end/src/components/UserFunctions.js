@@ -46,7 +46,9 @@ export const generateTimetable = newMPI => {
       number_of_slaves: newMPI.number_of_slaves,
       max_iteration_number: newMPI.max_iteration_number,
       mutation_probability: newMPI.mutation_probability,
-      cross_probability: newMPI.cross_probability
+      cross_probability: newMPI.cross_probability,
+      number_of_init: newMPI.number_of_init,
+      program_timeout: newMPI.program_timeout
     })
     .then(response => {
       return response.data
