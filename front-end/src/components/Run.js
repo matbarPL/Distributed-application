@@ -10,7 +10,8 @@ class Run extends Component {
     super()
     this.state = {
       selectedFile: null,
-      isSelectedFileUploaded: 0,
+      isSelectedFileUploaded: 1,
+      init_number: 16,
       number_of_classrooms: 4,
       number_of_slaves: 0,
       max_iteration_number: 2000,
@@ -105,6 +106,12 @@ class Run extends Component {
             <div className="row">
               <div className="col-md-6 mt-5 mx-auto">
                 <form noValidate onSubmit={this.tryGenerate}>
+                  <div className="form-group">
+                     <label htmlFor="init_number">Number of init population</label>
+                     <input type="number" min="4" max="20" className="form-control" name="init_number" placeholder="Enter init population"
+                       value={this.state.init_number}
+                       onChange={this.onChange}/>
+                   </div>
                    <div className="form-group">
                      <label htmlFor="number_of_classrooms">Number of classrooms</label>
                      <input type="number" min="4" max="20" className="form-control" name="number_of_classrooms" placeholder="Enter number of classrooms"
@@ -173,12 +180,15 @@ class Run extends Component {
         e.preventDefault()
 
         const newMPI = {
+          init_number: this.state.init_number,
           number_of_classrooms: this.state.number_of_classrooms,
           number_of_slaves: this.state.number_of_slaves,
           max_iteration_number: this.state.max_iteration_number,
           mutation_probability: this.state.mutation_probability,
-          cross_probability: this.state.cross_probability
+          cross_probability: this.state.cross_probability,
+          token: localStorage.usertoken
         }
+        
         this.startTimer()
             generateTimetable(newMPI).then(res => {
               if (!res.error) {

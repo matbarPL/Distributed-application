@@ -20,7 +20,7 @@ export const login = user => {
       password: user.password
     })
     .then(response => {
-      localStorage.setItem('usertoken', response.data)
+      localStorage.setItem('usertoken', response.data.token)
       return response.data
     })
     .catch(err => {
@@ -42,11 +42,13 @@ export const uploadData = formData => {
 export const generateTimetable = newMPI => {
   return axios
     .post('http://localhost:5000/api/users/function', {
+      init_number: newMPI.init_number,
       number_of_classrooms: newMPI.number_of_classrooms,
       number_of_slaves: newMPI.number_of_slaves,
       max_iteration_number: newMPI.max_iteration_number,
       mutation_probability: newMPI.mutation_probability,
-      cross_probability: newMPI.cross_probability
+      cross_probability: newMPI.cross_probability,
+      token: newMPI.token
     })
     .then(response => {
       return response.data

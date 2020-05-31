@@ -8,6 +8,7 @@ class Profile extends Component {
       first_name: '',
       last_name: '',
       email: '',
+      admin: '',
       error: ''
     }
   }
@@ -19,10 +20,12 @@ class Profile extends Component {
   componentDidMount() {
     const token = localStorage.usertoken
     const decoded = jwt_decode(token)
+    console.log(decoded)
     this.setState({
       first_name: decoded.identity.first_name,
       last_name: decoded.identity.last_name,
-      email: decoded.identity.email
+      email: decoded.identity.email,
+      admin: decoded.identity.admin
     })
   }
 
@@ -47,6 +50,10 @@ class Profile extends Component {
               <tr>
                 <td>Email</td>
                 <td>{this.state.email}</td>
+              </tr>
+              <tr>
+                <td>Admin</td>
+                <td>{this.state.admin.toString()}</td>
               </tr>
             </tbody>
           </table>

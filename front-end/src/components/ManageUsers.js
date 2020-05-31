@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, CardHeader, CardBody, Button} from "shards-r
 import axios from 'axios'
 import { Redirect } from "react-router-dom";
 
-class Tables extends React.Component {
+class ManageUsers extends React.Component {
   constructor(props){
     super(props);
     this.deleteUser = this.deleteUser.bind(this);
@@ -56,6 +56,9 @@ class Tables extends React.Component {
                             email
                           </th>
                           <th scope="col" className="border-0" >
+                            admin
+                          </th>
+                          <th scope="col" className="border-0" >
                             action
                           </th>
                         </tr>
@@ -67,6 +70,7 @@ class Tables extends React.Component {
                             <td>{user.first_name}</td>
                             <td>{user.last_name}</td>
                             <td>{user.email}</td>
+                            <td>{user.admin.toString()}</td>
                             <td>
                                 <Button onClick={(event) => {this.deleteUser(event, user.id)}}>
                                     Delete
@@ -85,4 +89,4 @@ class Tables extends React.Component {
     }
 };
 
-export default Tables;
+export default ManageUsers;

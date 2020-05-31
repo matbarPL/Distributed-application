@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, send_from_directory
 from datetime import datetime
 from flask_jwt_extended import (create_access_token)
-from app.models import User
+from app.models import User, Task
 from werkzeug.utils import secure_filename
 
 from app import bcrypt
@@ -57,10 +57,10 @@ def login():
     else:
         user_password_hash = user.password_hash
         if bcrypt.check_password_hash(user_password_hash, password):
-            access_token = create_access_token(
-                identity={'first_name': user.first_name, 'last_name': user.last_name,\
-                          'email': user.email})
-            result = access_token
+            user.set_token()
+            db.session.commit()
+            result = jsonify({'token': user.token,
+                            'admin': user.admin})
         else:
             result = jsonify({"error": "Invalid password"})
 
@@ -74,9 +74,7 @@ def get_users():
 
 @bp.route('/users/delete', methods=['POST'])
 def delete_user():
-    print(request.get_json()['id'])
     user_to_del = User.query.filter_by(id=request.get_json()['id']).one()
-    print(user_to_del)
     db.session.delete(user_to_del)
     db.session.commit()
     response = jsonify(user_to_del.to_dict())
@@ -105,11 +103,24 @@ def upload_file():
 
 @bp.route('/users/function', methods=['GET', 'POST'])
 def generateTimetable():
+    init_number = request.get_json()['init_number']
     number_of_classrooms = request.get_json()['number_of_classrooms']
     number_of_slaves = request.get_json()['number_of_slaves']
     max_iteration_number = request.get_json()['max_iteration_number']
     mutation_probability = request.get_json()['mutation_probability']
     cross_probability = request.get_json()['cross_probability']
+    user = User.query.filter_by(token = request.get_json()['token']).one()
+    user_id = user.id
+
+    task = Task(init_number=init_number,
+                number_of_classrooms = number_of_classrooms ,
+                number_of_slaves = number_of_slaves,
+                max_iteration_number = max_iteration_number,
+                mutation_probability = mutation_probability,
+                cross_probability = cross_probability,
+                user_id = user_id)
+    db.session.add(task)
+    db.session.commit()
 
     mpiNodes = ''
     if number_of_slaves > 0:

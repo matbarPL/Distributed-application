@@ -7,7 +7,8 @@ import Login from './components/Login'
 import Register from './components/Register'
 import Profile from './components/Profile'
 import Run from './components/Run'
-import Manage from './components/Manage'
+import ManageTasks from './components/ManageTasks'
+import ManageUsers from './components/ManageUsers'
 
 class App extends Component {
   render() {
@@ -20,11 +21,12 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/manage" component={Manage} />
+            <Route exact path="/manage-tasks" component={ManageTasks} />
+            <Route exact path="/manage-users" component={ManageUsers} />
             <Route exact path="/run" component={Run} />
           </div>
         </div>
-      </Router>
+      </Router> 
     )
   }
 }

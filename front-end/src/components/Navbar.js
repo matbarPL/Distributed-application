@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
 
 class Landing extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      admin: false
+    }
+  }
+
   logOut(e) {
     e.preventDefault()
     localStorage.removeItem('usertoken')
@@ -37,8 +45,38 @@ class Landing extends Component {
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/manage" className="nav-link">
+          <Link to="/manage-tasks" className="nav-link">
+            Manage tasks
+          </Link>
+        </li>
+        <li className="nav-item">
+          <a href="" onClick={this.logOut.bind(this)} className="nav-link">
+            Logout
+          </a>
+        </li>
+      </ul>
+    )
+
+    const adminLink = (
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <Link to="/profile" className="nav-link">
+            User
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/run" className="nav-link">
+            Run
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/manage-users" className="nav-link">
             Manage users
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/manage-tasks" className="nav-link">
+            Manage tasks
           </Link>
         </li>
         <li className="nav-item">
@@ -74,7 +112,10 @@ class Landing extends Component {
               </Link>
             </li>
           </ul>
-          {localStorage.usertoken ? userLink : loginRegLink}
+          {localStorage.usertoken
+            ? adminLink
+            : loginRegLink
+          }
         </div>
       </nav>
     )
