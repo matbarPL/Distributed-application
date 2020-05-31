@@ -1,0 +1,35 @@
+commit f7f6fd47fefdb7a0e14d2bf15bbcc1180fdd387b
+Author: Mateusz Baryła <mateusz.baryla.1996@gmail.com>
+Date:   Sun May 31 10:35:34 2020 +0200
+
+    manage users, manage tasks
+
+commit f9da3793dc7d1709a880d57e44e49a65d5269d04
+Author: Mateusz Baryła <mateusz.baryla.1996@gmail.com>
+Date:   Fri May 29 18:09:52 2020 +0200
+
+    added manage users view
+
+commit 946d465c5a114e4c605a7e4eb5e784f43884a8d6
+Author: Norwin94 <48451567+Norwin94@users.noreply.github.com>
+Date:   Fri May 15 02:18:29 2020 +0200
+
+    Create README.md
+
+commit 2660bb226ed17a9c42114a4ed8f60bb44273fc84
+Author: lukasz <lukasz.szumilas1994@gmail.com>
+Date:   Fri May 15 02:10:16 2020 +0200
+
+    webapp corresponding with mpi
+
+commit 3407a30d10dcbe5e1a401c9ae11b0d427f3d9afd
+Author: Mateusz Baryła <mateusz.baryla.1996@gmail.com>
+Date:   Tue May 5 20:53:27 2020 +0200
+
+    adding react front-end
+
+commit 0900e9520ac01b03e6feaee2c33fdd2539140525
+Author: Mateusz Baryła <mateusz.baryla.1996@gmail.com>
+Date:   Tue May 5 20:27:38 2020 +0200
+
+    adding back-end
